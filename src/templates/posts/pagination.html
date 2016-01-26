@@ -1,0 +1,15 @@
+<div class="col-sm-8 col-sm-offset-2">
+	<ul class="pagination">
+		{% if object_list.has_previous %}
+			<li><a href="?page={{ object_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">&laquo;</a></li>
+		{% endif %}
+		{% if object_list.object_list %}
+			{% for page_num in page_range %}
+				<li {% if object_list.number == page_num %}class="active"{% endif %}><a href="?page={{ page_num }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ page_num }}</a></li>
+			{% endfor %}
+		{% endif %}
+		{% if object_list.has_next %}
+			<li><a href="?page={{ object_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">&raquo;</a></li>
+		{% endif %}
+	</ul>
+</div>

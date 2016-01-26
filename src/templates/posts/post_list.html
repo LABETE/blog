@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<div class="col-sm-8 col-sm-offset-2">
+		<h2 class="text-center">Posts</h2>
+		<hr/>
+		<form action="" method="GET" role="form">
+			<input type="search" placeholder="Search" name="q" id="inputQ" class="form-control" value="{{ request.GET.q }}" title="">
+			<button type="submit" class="btn btn-primary">Search</button>
+		</form>
+		
+	</div>
+	{% include "posts/pagination.html" with object_list=object_list page_range=page_range %}
+	{% if object_list %}
+		{% for post in object_list %}
+			<div class="col-sm-8 col-sm-offset-2">
+				<div class="thumbnail">
+					{% if post.image %}
+						<img src="{{ post.image.url }}" class="img-responsive" alt="">
+					{% endif %}
+					<div class="caption">
+						<h3>{{ post.title }}</h3>
+						{% if post.draft %} <h3>Draft</h3> {% endif %}
+						<small>
+						Author: 
+							{% if post.user.get_full_name %}
+								{{ post.user.get_full_name }}
+							{% else %} 
+								{{ post.user.username }}
+							{% endif %}.
+						Published: {{ post.publish }}
+						</small>
+						<p>
+							{{ post.content|linebreaks|truncatechars:120 }}
+						</p>
+						<p>
+							<a href="{{ post.get_absolute_url }}" class="btn btn-primary">View</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	{% else %}
+		<div class="col-sm-8 col-sm-offset-2">
+			<h2 class="text-center">You have no posts</h2>
+		</div>
+	{% endif %}
+	{% include "posts/pagination.html" with object_list=object_list page_range=page_range %}
+	
+{% endblock content %}
+

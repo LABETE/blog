@@ -1,0 +1,7 @@
+{% load crispy_forms_tags %}
+
+<form action="" method="POST" role="form" enctype="multipart/form-data">
+	{% csrf_token %}
+	{{ form|crispy }}
+	<button type="submit" class="btn btn-primary">{% if btn_name %}{{ btn_name }}{% else %}Create{% endif %}</button>
+</form>
